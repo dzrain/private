@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<!-- Mirrored , Wed, 20 Jan 2016 14:19:52 GMT -->
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<title>AMRO</title>
+
+	<link rel="shortcut icon" href="/favicon.ico"/>
+	<link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+	<link href="/css/animate.min.css" rel="stylesheet">
+	<link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/plugins/easyui/themes/bootstrap/easyui.css" >
+	<link rel="stylesheet" type="text/css" href="/css/plugins/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="/css/plugins/easyui/themes/color.css">
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+
+	<link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
+	<link rel="stylesheet" type="text/css" href="/css/icon.css">
+	<link rel="stylesheet" type="text/css" href="/css/plugins/easyui/themes/bootstrap/easyui.css" id="swicth-style">
+	<link rel="stylesheet" type="text/css" href="/css/plugins/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="/css/plugins/easyui/themes/color.css">
+	<!--<script type="text/javascript" src="/js/jquery-3.1.0.min.js"></script>-->
+	<script type="text/javascript" src="/js/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="/js/constants.js"></script>
+	<!--<script type="text/javascript" src="/js/plugins/Validform_v5.3.2/Validform_v5.3.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/plugins/Validform_v5.3.2/css/style.css">-->
+
+	<script type="text/javascript" src="/js/plugins/easyui/jquery.easyui.custom.min.js"></script>
+	<script type="text/javascript" src="/js/plugins/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="/js/plugins/cookie/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/js/base64.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
+	<script type="text/javascript" src="/js/plugins/layer/layer.js?style=default"></script>
+	<script src="/js/plugins/i18next/i18next.min.js"></script>
+	<script type="text/javascript" src="/js/combobox_utils.js"></script>
+	<script type="text/javascript" src="/js/plugins/laytpl/laytpl.js"></script>
+	<script type="text/javascript" src="/js/add.js"></script>
+
+	<script type="text/javascript">
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+	</script>
+	<style>
+		html {
+			background: url("/img/timg.png") no-repeat center center;
+			background-size: cover;
+		}
+
+		.gray-bg {
+			background: none;
+		}
+
+		.fadeInDown {
+			padding: 0;
+		}
+
+		.allDiv {
+			width: 900px;
+			height: 310px;
+			margin: 120px auto;
+		}
+
+		.allDiv .leftDiv {
+			width: 550px;
+			height: 310px;
+			float: left;
+			background: url("/img/timg.jpg") no-repeat center center;
+			background-size: cover;
+		}
+
+		.allDiv .ritDiv {
+			width: 350px;
+			height: 310px;
+			float: left;
+			background: #fff;
+		}
+
+		.btn-primary {
+			background: #2d3c5d;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+<div class="allDiv">
+	<div style="position: absolute;right: -20px; bottom: 20px;"><img src="/img/bireturn-logo.png" width="70%" height="70%"></div>
+	<div class="leftDiv"></div>
+	<div class="middle-box text-center loginscreen  animated fadeInDown ritDiv">
+		<div>
+			<div>
+				<h1 class="logo-name" style="font-size: 60px;letter-spacing: 2px;color: #2d3c5d;margin-top: 30px;">
+					AMRO</h1>
+			</div>
+			<h4 style="color: #cccccc">Aircraft Maintenance Repair Overhaul</h4>
+
+			<form id="mform" class="m-t" role="form" action="#" method="post">
+				<div class="form-group" style="width: 300px;margin: 10px auto">
+					<input type="username" name="username" class="form-control" value="admin" placeholder="用户名" required="">
+				</div>
+				<div class="form-group" style="width: 300px;margin: 0px auto;margin-bottom: 10px;">
+					<input type="password" name="userPassword" class="form-control" value="111111" placeholder="密码"
+						   required="">
+				</div>
+				<div class="form-group" style="width: 300px;margin: 0px auto;margin-bottom: 10px;">
+					<input type="text" name="vCode" class="form-control" id="vCode" value="">
+					<!--<img src="/verifyCode" style="margin-top:10px;">-->
+				</div>
+				<button type="submit" id="btnSubmit"
+						style="width: 300px;padding: 2px 0;margin: 0 auto;border-color: #2d3c5d;"
+						class="btn btn-primary block m-b">登 录
+				</button>
+				<p class="text-muted text-center"> <!--<a href="login_v2.shtml"><small>第二版登陆</small></a>-->
+				</p>
+
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    var IS_DEBUG = true;
+    $(function () {
+        $('#mform').form({
+            onSubmit: function () {
+                var isValidate = $(this).form('validate');
+                if (isValidate) {
+                    var data = $('#mform').serializeObject();
+                    if (!IS_DEBUG && $.trim(data.vCode) == '') {
+                        layer.msg("请输入验证码!", {icon: 5});
+                        return;
+                    }
+                    if (IS_DEBUG) {
+                        data.vCode = '1';
+                    }
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#btnSubmit").html("登 录 中 . . .");
+                    layerStandardAjaxCall_({
+                        url: "/api/v1/security/login",
+                        data: data,
+                        success: function (jdata) {
+                            if (jdata.code == RESULT_CODE.SUCCESS_CODE) {
+                                window.location.href = "/views/home.shtml";
+                            } else {
+                                $("#btnSubmit").attr("disabled", false);
+                                $("#btnSubmit").html("登 录");
+                                layer.msg(jdata.msg ? jdata.msg : "登录失败!", {icon: 5});
+                            }
+                        }
+                    });
+                }
+                return false;
+            }
+        });
+        // $("#btnSubmit").submit();
+    });
+
+</script>
+</body>
+
+<!-- Mirrored , Wed, 20 Jan 2016 14:19:52 GMT -->
+</html>
+

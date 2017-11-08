@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<title>优朋影视</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta content="zh-CN" http-equiv="Content-Language"/>
+	<meta content="优朋影视 优朋普乐为电信运营商和广电运营商面向其PC、TV、Mobile等各种类型终端用户的数字娱乐平台提供高品质平台构建、运营支撑及内容输出服务。" name="description"/>
+	<meta content="优朋影视,电影,电视剧,在线电影,在线电视剧,最新电影, 最新电视剧,voole.com" name="keywords"/>
+	<meta content="优朋影视版权所有" name="Copyright"/>
+	<meta content="www.voole.com,优朋影视" name="author"/>
+	<meta name="page-view-size" content="1280*720"/>
+</head>
+<body style="background-color:black;">
+	<div style="color:#fff;font-size:28px;line-height:45px;top: 300px; left: 300px; position: absolute;" id="loading">
+		<img width="92" height="92" src="./style/images_html/loading.gif" alt="loading" />
+	</div>
+</body>
+<script src="js/jquery/jquery-1.7.min.js"></script>
+<script src="js/app/ekey.js"></script>
+<script src="js/app/authNew.js"></script>
+<script src="js/app/config.js"></script>
+<script src="js/base64.js"></script>
+<script src="js/jquery/jquery.xml2json.js"></script>
+<script type="text/javascript">
+	var jq = $.noConflict();
+
+	//清空上次遗留的cookie数据
+	cookie.delCookie("window_name");
+	cookie.delCookie("oemid");
+	cookie.delCookie("hid");
+	cookie.delCookie("epgid");
+	cookie.delCookie("ispid");
+	cookie.delCookie("wlan");
+	cookie.delCookie("area");
+	
+	//loading图片居中显示
+	var id = document.getElementById("loading");
+	var width  = document.documentElement.clientWidth;
+	var height = document.documentElement.clientHeight;
+	id.style.top  = (height - 92) / 2 + "px";
+	id.style.left = (width - 92) / 2 + "px";
+
+	//debugger;
+	//获取epg_info信息
+	var p = tool.url2json(window.location.href);
+	//频道区分，如果没有就是主页面
+	var act = p.act || 'index';
+	
+	var epg_info = decodeURIComponent(p.epg_info);
+	if (epg_info) {
+		//epg信息
+		//var o = jq.xml2json("<xml>" + epg_info + "</xml>");
+		//o.body && (o = o.body.xml);
+		var o = xml2json(epg_info);
+		//debug(o);
+		
+		//平台区分
+		var voole_partner = o.partner.indexOf('ZTE') > -1 ? 'ZTE' : 'HUAWEI';
+		var confobj = conf[voole_partner];
+		var oemid = confobj["OEMID"];
+		var stbInfo = {
+			oemid : oemid,
+			voole_partner : voole_partner,
+			act : act,
+			SPID : confobj["SPID"],
+			epgid : confobj["PortalID"],
+			partner : confobj["partner"],
+			vasUrl : conf["vasUrl"],
+			confirmUrl : conf["confirmUrl"],
+			authUrl : conf["authUrl"],
+			icpCode : conf["icpCode"],
+			pvSwitch : conf["pvSwitch"],
+			testEpgUrl : conf["testEpgUrl"],
+			//返回地址
+			backUrl : p.backUrl
+		};
+		
+		//用户名
+		o.user_name = p.user_name;
+		//hid
+		var hid = o.oss_user_id;
+		//获取用户名给hid
+		stbInfo.hid = hid;
+		//epg_info封套信息也要
+		stbInfo.epg_info = epg_info;
+		//合并信息
+		stbInfo = concatJson(o, stbInfo);
+		//保存到window.name
+		var window_name = JSON.stringify({stbInfo : stbInfo});
+		window.name = window_name;
+		cookie.setCookie("window_name", window_name);
+		//jq("#loading").html("认证成功, 【海量】【高清】【最新】影视之旅即刻开启......");
+		//jq("#loading").css("left", (jq("#loading").offset().left - jq("#loading").width() / 2) + "px");
+		//默认是首页
+		var jUrl = "/index/index.action?page=1";
+		switch (act) {
+			case "4k": //4k频道
+				jUrl = "/filmlist/index.action?ctype=2&mtype=30&column=cate__4Kzq_1428994660&page=1&pagesize=12&columnIndex=2";
+				break;
+			case "zlist": //专题频道
+				var code = p.channelcode;
+				jUrl = "/filmlist/indexForZhuan.action?ctype=3&column=" + code + "&page=1&pagesize=6&columnIndex=1&step=3";
+				break;
+			case "list": //普通频道
+				var column = p.column;
+				var mtype = p.mtype;
+				jUrl = "/filmlist/index.action?ctype=2&mtype=" + mtype + "&column=" + column + "&page=1&pagesize=12&columnIndex=1";
+				break;
+			case "view": //详情页
+				var mid = p.mid;
+				var mtype = p.mtype;
+				jUrl = "/filmInfo/mid.action?page=1&mid=" + mid + "&mtype=" + mtype;
+				break;
+		}
+		//判定url地址是否有adpos,用于统计汇报
+		if(p["adpos"]!=null){
+			jUrl+=("&adpos="+p["adpos"]);
+			cookie.setCookie("adpos", p["adpos"]);
+		}else{
+			cookie.setCookie("adpos", "Default");
+		}
+		var url = tool.json2url({
+			oemid : oemid,
+			hid : hid,
+			act : new Base64().encode(jUrl)
+		}, tool.project_domain() + "/index/init.action");
+		//跳转epg首页
+		window.location.href = url;
+	} else {
+		//jq("#loading").html("认证失败, 【海量】【高清】【最新】影视之旅即刻开启......");
+		//jq("#loading").css("left", (jq("#loading").offset().left - jq("#loading").width() / 2) + "px");
+	}
+	
+	function xml2json(xml) {
+		xml = jQuery(xml);
+		var json = {};
+		for (var i = 0, length = xml.length; i < length; i++) {
+			var obj = xml[i];
+			if (obj.tagName) {
+				var key = obj.tagName.toLowerCase();
+				json[key] = obj.textContent || obj.innerText;
+			}
+		}
+		return json;
+	}
+</script>
+</html>
